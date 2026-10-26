@@ -26,7 +26,7 @@
 ## Установка
 
 ```powershell
-git clone https://github.com/<you>/dsh-powerpack
+git clone https://github.com/poliroika/dsh-powerpack
 cd dsh-powerpack
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
