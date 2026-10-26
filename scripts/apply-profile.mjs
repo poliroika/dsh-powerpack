@@ -36,8 +36,8 @@ if (added) writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf8');
 console.log(`bundles: +${added} (session-search)`);
 
 // 2. managed block in cordis.patch.yml
-const BEGIN = '# >>> dsh-ru-profile managed block';
-const END = '# <<< dsh-ru-profile managed block';
+const BEGIN = '# >>> dsh-powerpack managed block';
+const END = '# <<< dsh-powerpack managed block';
 const BLOCK = `${BEGIN}
 # Russian interface locale. The block is appended by the installer; re-running it
 # replaces nothing and duplicates nothing.

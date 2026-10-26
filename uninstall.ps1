@@ -37,7 +37,7 @@ $packages = @(
 $patch = Join-Path $profileDir 'cordis.patch.yml'
 if (Test-Path $patch) {
   $text = Get-Content $patch -Raw
-  $pattern = '(?ms)^# >>> dsh-ru-profile managed block.*?^# <<< dsh-ru-profile managed block\r?\n?'
+  $pattern = '(?ms)^# >>> dsh-powerpack managed block.*?^# <<< dsh-powerpack managed block\r?\n?'
   $new = [regex]::Replace($text, $pattern, '')
   if ($new -ne $text) { Set-Content -Path $patch -Value $new -Encoding UTF8; Write-Host 'cordis.patch.yml: управляемый блок удалён' }
 }
