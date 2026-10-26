@@ -1,0 +1,56 @@
+name: localize
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  localize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Prepare a clean profile with the upstream plug-in package
+        run: |
+          set -euo pipefail
+          mkdir -p test-profile/node_modules/@a9i5k4
+          npm pack "@a9i5k4/dsh-auto-memory@3.3.17" --pack-destination /tmp
+          mkdir -p test-profile/node_modules/@a9i5k4/dsh-auto-memory
+          tar -xzf /tmp/a9i5k4-dsh-auto-memory-3.3.17.tgz \
+            -C test-profile/node_modules/@a9i5k4/dsh-auto-memory --strip-components=1
+
+      - name: Apply localization on a pristine package
+        run: |
+          node localize/localize.mjs --profile test-profile | tee /tmp/first.log
+          grep -q "prompt frame: 27 keys" /tmp/first.log
+          grep -q "tool descriptions: 19/19" /tmp/first.log
+          grep -q "hardcoded client strings: 1740 replacements" /tmp/first.log
+
+      - name: Both patched modules must parse
+        run: |
+          LIB=test-profile/node_modules/@a9i5k4/dsh-auto-memory/lib
+          node --check "$LIB/index.js"
+          node --check "$LIB/client.js"
+          node --check "$LIB/ledger-criteria.js"
+          node --check "$LIB/handoff-anchor.js"
+
+      - name: Second run must be a no-op
+        run: |
+          node localize/localize.mjs --profile test-profile | tee /tmp/second.log
+          test "$(grep -c 'already localized' /tmp/second.log)" -ge 5
+
+      - name: Installer scripts must parse
+        shell: pwsh
+        run: |
+          $files = @('install.ps1', 'uninstall.ps1')
+          $failed = 0
+          foreach ($f in $files) {
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $f), [ref]$null, [ref]$errors)
+            if ($errors.Count -gt 0) { Write-Error "$f has parse errors"; $failed++ }
+          }
+          if ($failed -gt 0) { exit 1 }
