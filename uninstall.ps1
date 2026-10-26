@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
   Снимает пакеты и управляемые блоки, поставленные install.ps1.
