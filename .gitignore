@@ -1,0 +1,31 @@
+# зависимости и локальные данные — не коммитим
+node_modules/
+.pnpm-store/
+*.tgz
+
+# личные данные DSH
+.dsh/
+.dsh-memory/
+sessions/
+memory/
+*.credentials.yaml
+*.credentials.json
+
+# модели и распакованные сборки
+models/
+_x/
+_app/
+*.onnx
+*.bin
+*.dll
+*.exe
+
+# мусор
+logs/
+*.log
+backup/
+*.bak
+*.orig
+*.ru-final*
+.DS_Store
+Thumbs.db

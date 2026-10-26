@@ -1,0 +1,11 @@
+{
+  "name": "dsh-local-presets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "User agent presets: fast, research",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

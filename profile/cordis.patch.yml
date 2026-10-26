@@ -1,0 +1,16 @@
+# Минимальная управляемая вставка в cordis.patch.yml профиля DSH.
+# install.ps1 копирует этот блок в ваш профиль, не затирая существующие настройки.
+# >>> dsh-ru-profile managed block
+- id: locale
+  name: "@deepseek-ai/dsh-client-locale"
+  config:
+    preference: ru
+# <<< dsh-ru-profile managed block
+#
+# По желанию (раскомментируйте и подставьте свою модель/усилие):
+# - id: agent-default-model
+#   name: "@deepseek-ai/dsh-agent-default-model"
+#   config:
+#     provider: deepseek-account
+#     model: deepseek-flash
+#     reasoningEffort: high
